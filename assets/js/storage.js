@@ -5,9 +5,13 @@
 // but this is client-side-only auth, not a secure credential store.
 // ============================================================
 
-const DB_USERS = 'caie_users_v1';
-const DB_SESSION = 'caie_session_v1';
-const DB_HISTORY_PREFIX = 'caie_history_v1_';
+// All sister CAIE apps deploy under the same jude-ufoh.github.io origin, and
+// localStorage is scoped by origin (not path) -- without a per-app namespace,
+// signing up on one app would silently share accounts/history with the others.
+const APP_NAMESPACE = 'caie-module-practice-engine';
+const DB_USERS = `caie_users_v1__${APP_NAMESPACE}`;
+const DB_SESSION = `caie_session_v1__${APP_NAMESPACE}`;
+const DB_HISTORY_PREFIX = `caie_history_v1__${APP_NAMESPACE}__`;
 
 async function sha256(text) {
   const enc = new TextEncoder().encode(text);
